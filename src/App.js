@@ -8,7 +8,7 @@ function App() {
     const theme = deepMerge(grommet, {
         global: {
             font: {
-                family: 'Space Grotesk',
+                family: 'Space Mono',
                 size: '18px',
                 height: '20px'
             }
