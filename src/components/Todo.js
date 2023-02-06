@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import Airtable from 'airtable';
-import { Box, Spinner } from 'grommet';
+import { Box, Spinner, Button, Heading } from 'grommet';
 import TodoGroup from './TodoGroup';
+import { Update } from 'grommet-icons';
 
 const Todo = () => {
     const [entries, setEntries] = useState({});
@@ -59,11 +60,13 @@ const Todo = () => {
         base('TodoPoints').update([{ id, fields: { isChecked } }]);
     };
 
+    const fetchData = async () => {
+        setIsFetching(true);
+        setEntries({});
+        base('TodoPoints').select().firstPage(callbackResponse);
+    };
+
     useEffect(() => {
-        const fetchData = async () => {
-            setIsFetching(true);
-            base('TodoPoints').select().firstPage(callbackResponse);
-        };
         fetchData();
     }, []);
 
@@ -71,12 +74,11 @@ const Todo = () => {
         <Box
             pad="medium"
             border={{
-                color: isFetching ? 'brand' : 'dark-1',
-                size: isFetching ? 'xlarge' : 'medium'
+                color: isFetching ? 'control' : 'dark-1',
+                size: 'large'
             }}
             width="50vw"
             round
-            direction="column"
         >
             {isFetching && (
                 <Box
@@ -86,7 +88,20 @@ const Todo = () => {
                     align="center"
                     justify="center"
                 >
-                    <Spinner size="large" />
+                    <Spinner color="control" size="large" />
+                </Box>
+            )}
+            {!isFetching && (
+                <Box
+                    direction="row"
+                    justify="between"
+                    align="center"
+                    border={[{ color: 'dark-2', side: 'bottom' }]}
+                >
+                    <Heading size="small">Todo</Heading>
+                    <Box>
+                        <Button primary icon={<Update />} onClick={fetchData} />
+                    </Box>
                 </Box>
             )}
             {Object.values(entries).map((item) => (
