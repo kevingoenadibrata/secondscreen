@@ -2,11 +2,13 @@ import { useEffect, useState } from 'react';
 import Airtable from 'airtable';
 import { Box, Spinner, Button, Heading } from 'grommet';
 import TodoGroup from './TodoGroup';
-import { Update } from 'grommet-icons';
+import { Update, Add } from 'grommet-icons';
+import AddPopup from './AddPopup';
 
 const Todo = () => {
     const [entries, setEntries] = useState({});
     const [isFetching, setIsFetching] = useState(false);
+    const [showAddPopup, setShowAddPopup] = useState(false);
 
     Airtable.configure({
         endpointUrl: 'https://api.airtable.com',
@@ -30,7 +32,7 @@ const Todo = () => {
         console.log(processedRecs);
 
         for (let i = 0; i < processedRecs.length; i++) {
-            const label = processedRecs[i].categoryLabel[0] || '';
+            const label = processedRecs[i].categoryLabel || '';
             console.log(label);
             if (!todo[label]) {
                 todo[label] = {
@@ -44,6 +46,15 @@ const Todo = () => {
 
         setEntries(todo);
         setIsFetching(false);
+    };
+
+    const handleAddEntry = (content, categoryLabel) => {
+        base('TodoPoints').create(
+            [{ fields: { content, categoryLabel } }],
+            () => {
+                fetchData();
+            }
+        );
     };
 
     const handleCheck = (label, id, isChecked) => {
@@ -99,9 +110,25 @@ const Todo = () => {
                     align="center"
                     border={[{ color: 'dark-2', side: 'bottom' }]}
                 >
+                    <AddPopup
+                        showAddPopup={showAddPopup}
+                        setShowAddPopup={setShowAddPopup}
+                        categories={Object.keys(entries)}
+                        addEntry={handleAddEntry}
+                    />
                     <Heading size="small">Todo</Heading>
-                    <Box>
-                        <Button primary icon={<Update />} onClick={fetchData} />
+                    <Box direction="row" gap="8px">
+                        <Box>
+                            <Button icon={<Update />} onClick={fetchData} />
+                        </Box>
+
+                        <Box>
+                            <Button
+                                primary
+                                icon={<Add />}
+                                onClick={() => setShowAddPopup(true)}
+                            />
+                        </Box>
                     </Box>
                 </Box>
             )}

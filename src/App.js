@@ -40,7 +40,7 @@ function App() {
                 >
                     <Text size="xlarge">Hi, Kevin Go</Text>
                     <Clock
-                        format={'HH:mm:ss A'}
+                        format={'hh:mm:ss A'}
                         ticking={true}
                         className="clock"
                     />
