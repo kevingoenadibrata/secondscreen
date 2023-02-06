@@ -21,14 +21,23 @@ function App() {
             size: '32px'
         },
         box: {
-            extend: 'transition-duration: 1000ms'
+            extend: 'transition-duration: 500ms'
         }
     });
 
     return (
         <Grommet theme={theme} full themeMode="dark">
-            <Page pad="medium" width="100vw" direction="row" justify="between">
-                <Box pad="large" gap="32px">
+            <Page
+                pad="medium"
+                width="100vw"
+                direction="row-reverse"
+                justify="between"
+            >
+                <Box
+                    pad="large"
+                    gap="32px"
+                    style={{ position: 'fixed', left: 0, top: 0 }}
+                >
                     <Text size="xlarge">Hi, Kevin Go</Text>
                     <Clock
                         format={'HH:mm:ss A'}

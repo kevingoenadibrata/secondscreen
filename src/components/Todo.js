@@ -72,13 +72,14 @@ const Todo = () => {
 
     return (
         <Box
-            pad="medium"
+            pad={{ horizontal: 'large', top: 'small' }}
             border={{
                 color: isFetching ? 'control' : 'dark-1',
                 size: 'large'
             }}
             width="50vw"
             round
+            alignSelf="end"
         >
             {isFetching && (
                 <Box

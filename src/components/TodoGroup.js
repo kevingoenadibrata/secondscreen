@@ -8,7 +8,12 @@ const TodoGroup = ({ title, entries, handleCheck }) => {
             </Heading>
             <Box gap="16px">
                 {entries.map((item) => (
-                    <Box>
+                    <Box
+                        style={{ opacity: item.isChecked ? 0.3 : 1 }}
+                        direction="row"
+                        align="center"
+                        gap="8px"
+                    >
                         <CheckBox
                             checked={item.isChecked}
                             label={item.content}
