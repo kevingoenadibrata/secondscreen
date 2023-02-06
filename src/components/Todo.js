@@ -76,6 +76,7 @@ const Todo = () => {
             }}
             width="50vw"
             round
+            direction="column"
         >
             {isFetching && (
                 <Box
