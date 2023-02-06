@@ -1,25 +1,47 @@
-import logo from './logo.svg';
 import './App.css';
+import Todo from './components/Todo';
+import Clock from 'react-live-clock';
+import { Grommet, Box, grommet, Page, Text } from 'grommet';
+import { deepMerge } from 'grommet/utils';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const theme = deepMerge(grommet, {
+        global: {
+            font: {
+                family: 'Space Grotesk',
+                size: '18px',
+                height: '20px'
+            }
+        },
+        checkBox: {
+            size: '32px'
+        },
+        box: {
+            extend: 'transition-duration: 1000ms'
+        }
+    });
+
+    return (
+        <Grommet theme={theme} full themeMode="dark">
+            <Page
+                pad="medium"
+                direction="row"
+                justify="between"
+                fill="horizontal"
+                height="100vh"
+            >
+                <Box pad="large" gap="32px">
+                    <Text size="xxlarge">Hi, Kevin Go</Text>
+                    <Clock
+                        format={'HH:mm:ss A'}
+                        ticking={true}
+                        className="clock"
+                    />
+                </Box>
+                <Todo />
+            </Page>
+        </Grommet>
+    );
 }
 
 export default App;
